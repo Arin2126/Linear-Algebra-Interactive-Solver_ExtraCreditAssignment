@@ -82,6 +82,15 @@ class Matrix:
         matrix = cls(field, rows, cols)
         matrix.set_entries([[v.values[i] for v in vectors] for i in range(rows)])
         return matrix
+    
+    def append_column(self, column):
+        if len(column) != self.rows:
+            raise ValueError("The length of the column must match the number of rows in the matrix.")
+
+        augmented_entries = [self.entries[i] + [column[i]] for i in range(self.rows)]
+        augmented_matrix = Matrix(self.field, self.rows, self.cols + 1)
+        augmented_matrix.set_entries(augmented_entries)
+        return augmented_matrix
 
     def __add__(self, other):
         if self.rows != other.rows or self.cols != other.cols:
